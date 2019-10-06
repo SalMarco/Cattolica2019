@@ -25,25 +25,26 @@ I invite you to create and account on [GitHub](https://github.com/) or [GitLab](
 
 One the easiest way to have Python and Jupyter is via Anaconda.
 
-From the site download the version for **Python 3.6**:
+From the site download the version for **Python 3.7**:
 
 https://www.anaconda.com/download/
 
+In order to simplify the creation of the environment, there is a file in the repository (called `spec-file.txt`) that can be use to create an environment with all the packages needed for this course.
+
+You can follow the instruction **in the section below** to clone the repo and retrieve the file (among all the others) and than:
+
+  1. Open Anaconda Navigator
+  2. Click on _Environments_ on the left panel
+  3. Click _Import_ at the bottom of the page
+  4. Write _Cattolica2019_ as _Name_ in the pop up window
+  5. Click on the folder icon and search for the folder that you have just cloned from the repository
+  6. Select _Conda explicit specification file_ in the file type drop down menu (at the bottom of the window)
+  7. Select the file _spec_file.txt_   
+  8. Click _select_ and than _import_
+
+If you are confuse about the procedure ask during the first lesson, we follow it together.
+
 You can find a guide for Jupyter here: [Jupyter Guide](https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook).
-
-### Add R Magic to Jupyter (Optional)
-
-If you want try to use R in Jupyter follow the instruction in the following link.
-
-**ADVICE:** I strongly advice, in any case, before moving on to install R and R studio **NOT** from anaconda but from the official website.  ([R-windows](https://cran.r-project.org/bin/windows/base/),[R-mac](https://cran.r-project.org/bin/macosx/),[Rstudio-all systems](https://rstudio.com/products/rstudio/download/#download))
-
-[Link for the Jupyer's R 'magic'](https://www.datacamp.com/community/blog/jupyter-notebook-r#gs.z0gxLNc)
-
-**NOTE** Sometimes for some Windows users can be difficult. If you run in some problems try the following:
-
-https://stackoverflow.com/questions/44056164/jupyter-client-has-to-be-installed-but-jupyter-kernelspec-version-exited-wit
-
-In any case it is not mandatory for the course and we can address any problems later.
 
 
 ## How to clone the repository for one/all the lessons
@@ -79,7 +80,7 @@ Execute the commands as you need and put yourself in the folder inside you want 
 
 Again, if it's your first experience with a terminal do not be afraid. We will se how to use it during the lectures.
 
-### Clone all the repos together
+### Clone the repo
 
 In order to clone the `Cattolica2019` repository with all its files execute
 

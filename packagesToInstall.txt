@@ -1,0 +1,3 @@
+installare R e Rsudio 
+conda install -c r rpy2
+conda install -c conda-forge tzlocal

@@ -1,0 +1,1768 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "Introduction to Python\n",
+    "================================\n",
+    "\n",
+    "Lesson 2 - Part1\n",
+    "--------"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Summary\n",
+    "\n",
+    "In this Lesson we will start using Python in order to create some models.\n",
+    "\n",
+    "The models that we will create are:\n",
+    "  - Linear\n",
+    "\n",
+    "In order to do so we must intruduce some important libraries:\n",
+    "\n",
+    "  - Pandas\n",
+    "  - Sklearn\n",
+    "  - Numpy"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "skip"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "%load_ext rpy2.ipython"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Numpy\n",
+    "\n",
+    "Citing from the [Numpy Website](http://www.numpy.org/) :NumPy is the fundamental package for scientific computing with Python. It contains among other things:\n",
+    "  - a powerful N-dimensional array object\n",
+    "  - sophisticated (broadcasting) functions\n",
+    "  - tools for integrating C/C++ and Fortran code\n",
+    "  - useful linear algebra, Fourier transform, and random number capabilities\n",
+    "Fior the moment our focus is on the first point, in oder to start usign proper arrays."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "type di ar1 <class 'numpy.ndarray'>\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "array([1, 2, 3])"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "#Creation of an array\n",
+    "ar1=np.array([1,2,3])\n",
+    "print('type di ar1',type(ar1))\n",
+    "ar1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Dimension of ar1 are: (3,)\n",
+      "Using .shape()\n",
+      "ERROR: 'tuple' object is not callable\n",
+      "You must use .shape without brackets\n",
+      "[1 2 3] (3,)\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Use shape to see the dimension of ar1\n",
+    "print('Dimension of ar1 are:',ar1.shape)\n",
+    "try:\n",
+    "    print('Using .shape()')\n",
+    "    print(ar1,ar1.shape())\n",
+    "except Exception as e:\n",
+    "    print('ERROR:',e)\n",
+    "    print('You must use .shape without brackets')\n",
+    "    print(ar1,ar1.shape)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Shape di ar2 (2, 3)\n",
+      "[[1 2 3]\n",
+      " [4 5 6]]\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "2"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#Creation of a multimensional array\n",
+    "ar2=np.array([[1,2,3],[4,5,6]])#,dtype=complex\n",
+    "print('Shape di ar2',ar2.shape)\n",
+    "print(ar2)\n",
+    "len(ar2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "**NOTE**: array and matrix in nupy are different objects"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'numpy.matrixlib.defmatrix.matrix'> [[1 2]\n",
+      " [3 4]]\n",
+      "<class 'numpy.ndarray'> [[1 2]\n",
+      " [3 4]]\n",
+      "<class 'numpy.matrixlib.defmatrix.matrix'> [[1 2]\n",
+      " [3 4]]\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "array([4, 5, 6])"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#Creatiomn of a matrix\n",
+    "mt=np.mat('1 2;3 4')\n",
+    "print(type(mt),mt)\n",
+    "#Putting the matrix inside an array\n",
+    "ar3=np.array(np.mat('1 2; 3 4'))\n",
+    "print(type(ar3),ar3)\n",
+    "#In order to keep the correct type\n",
+    "ar3=np.array(np.mat('1 2; 3 4'), subok=True)\n",
+    "print(type(ar3),ar3)\n",
+    "ar3\n",
+    "# mt\n",
+    "ar2[1,]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "**NOTE**: as we have seen in the previos lesson, also with `np.appay` we have to use `.copy()`.\n",
+    "\n",
+    "Without `.copy()` we'll create a pointer to the original array."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[[1 2 3]\n",
+      " [4 5 6]]\n",
+      "[[1 2 3]\n",
+      " [1 1 1]]\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "array([[1, 2, 3],\n",
+       "       [1, 1, 1]])"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "print(ar2)\n",
+    "ar2_bis=ar2#.copy()\n",
+    "ar2_bis[1,]=[1,1,1]\n",
+    "print(ar2)\n",
+    "ar2_bis"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Other properties of np.array\n",
+    "\n",
+    "Just to mention some other features, we can look to append:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[1 2 3 4 5 6 7 8 9] <class 'numpy.ndarray'>\n",
+      "[[1 2 3]\n",
+      " [4 5 6]\n",
+      " [7 8 9]] <class 'numpy.ndarray'>\n",
+      "[[1 2 3 4 5 6]\n",
+      " [1 1 1 7 8 9]] <class 'numpy.ndarray'>\n"
+     ]
+    }
+   ],
+   "source": [
+    "ap1=np.append([1, 2, 3], [[4, 5, 6], [7, 8, 9]])\n",
+    "print(ap1,type(ap1))\n",
+    "#Please note that the result is flattened\n",
+    "ap2=np.append([[1, 2, 3]], [[4, 5, 6], [7, 8, 9]], axis=0)\n",
+    "print(ap2,type(ap2))\n",
+    "ap3=np.append([[1, 2, 3],[1,1,1]], [[4, 5, 6], [7, 8, 9]], axis=1)\n",
+    "print(ap3,type(ap3))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Comparison between array an list\n",
+    "\n",
+    "Let's understand why for big data it's important to use an array istead of a list.\n",
+    "\n",
+    "We are going to do the sum of the list and two array. In one case is the sum of number, in the other the sum between two arrays like in linear algebra."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "54.4 µs ± 3.74 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)\n",
+      "The slowest run took 5.55 times longer than the fastest. This could mean that an intermediate result is being cached.\n",
+      "7.67 µs ± 6.69 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)\n"
+     ]
+    }
+   ],
+   "source": [
+    "a=[i for i in range(0,10000)]\n",
+    "%timeit -n 100 s=a+a\n",
+    "b=np.array([i for i in range(0,10000)])\n",
+    "%timeit -n 100 s2=b+b"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "[1] \"integer\"\n",
+       "[1] \"data.frame\"\n"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "%%R\n",
+    "c=as.integer(seq(1,10))\n",
+    "print(class(c))\n",
+    "d=data.frame(c)\n",
+    "print(class(d))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1.6 ms ± 277 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)\n"
+     ]
+    }
+   ],
+   "source": [
+    "%%timeit -n 100\n",
+    "%R c+c"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "2.26 ms ± 158 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)\n"
+     ]
+    }
+   ],
+   "source": [
+    "%%timeit -n 100\n",
+    "%R d+d"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Pandas \n",
+    "\n",
+    "Citing the [Pandas Website](https://pandas.pydata.org/): *pandas is an open source, BSD-licensed library providing high-performance, easy-to-use data structures and data analysis tools for the Python programming language*.\n",
+    "\n",
+    "What interest us the most is the possibility of create and use, like in R, **dataframes** ([Pandas DataFrame](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html))."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "   a  b\n",
+      "0  1  4\n",
+      "1  2  5\n",
+      "2  3  6 \n",
+      " <class 'pandas.core.frame.DataFrame'>\n",
+      "We can add columns afterward\n",
+      "   a  b  c\n",
+      "0  1  4  0\n",
+      "1  2  5  0\n",
+      "2  3  6  0\n",
+      "            max_speed  shield\n",
+      "cobra               1       2\n",
+      "viper               4       5\n",
+      "sidewinder          7       8\n",
+      "<class 'pandas.core.frame.DataFrame'>\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "4fd2d782cd5449129ff681cd74c64bda",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "import pandas as pd\n",
+    "\n",
+    "#Creation of a dataframe\n",
+    "df=pd.DataFrame({'a':[1,2,3],'b':[4,5,6]})\n",
+    "print(df,'\\n',type(df))\n",
+    "print('We can add columns afterward')\n",
+    "df['c']=[0,0,0]\n",
+    "print(df)\n",
+    "#Creatiion of a dataframe with index\n",
+    "df2 = pd.DataFrame([[1, 2], [4, 5], [7, 8]],\n",
+    "                  index=['cobra', 'viper', 'sidewinder'],\n",
+    "                  columns=['max_speed', 'shield'])\n",
+    "print(df2)\n",
+    "print(type(df2))\n",
+    "df3=pd.DataFrame({'col1':[10,20,30],'col2':['y','z','k']},index=['a','b','c'])\n",
+    "df3"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "**NOTE**: a dataframe can be created also starting from a `np.array` simply using `pd.DataFrame`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "c5ba420f65be4b138530af640ff0b047",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "dfFromArray=pd.DataFrame(ap2)#,columns=['pippo','pluto','paperino'])\n",
+    "dfFromArray"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Properties of a dataframe\n",
+    "\n",
+    "In the followig cell there is a sample of attributes ad properties of a pandas dataframe.\n",
+    "\n",
+    "Some of them are:\n",
+    "\n",
+    "  - `index`\n",
+    "  - `values`\n",
+    "  - `max()`\n",
+    "  - `add()`"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "   a  b  c\n",
+      "0  1  4  0\n",
+      "1  2  5  0\n",
+      "2  3  6  0\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "e803bc6a7e6e473da24da2c5e272f5cf",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "%qtconsole\n",
+    "print(df)\n",
+    "df.index\n",
+    "df.values\n",
+    "df.columns()\n",
+    "df.max()\n",
+    "df.min()\n",
+    "df.mean()\n",
+    "df.median()\n",
+    "df.add(df)\n",
+    "#se the link above"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Display dataframes nicely\n",
+    "\n",
+    "In order to print a dataframe in a nice way, like it is visualized without print if it is at the of a cell, we can use `display` from the library `IPython.display`.\n",
+    "\n",
+    "It is also possible to convert a dataframe to html with `to_html`, from the same library, and then use display.\n",
+    "\n",
+    "**NOTE**: display can also print text before and after am object, just like `print`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "8d19909f65a24072aeb19afafd12b7c9",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "using .to_html()\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>a</th>\n",
+       "      <th>b</th>\n",
+       "      <th>c</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>4</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2</td>\n",
+       "      <td>5</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3</td>\n",
+       "      <td>6</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>"
+      ],
+      "text/plain": [
+       "<IPython.core.display.HTML object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Display can also print text\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'Some random text'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "465c5925a61d4b518ea946eb3a8f5428",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "from IPython.display import display, HTML\n",
+    "display(df)\n",
+    "#Alternative\n",
+    "print('using .to_html()')\n",
+    "display(HTML(df.to_html()))\n",
+    "print('Display can also print text')\n",
+    "display('Some random text',df)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## How to select row and columns\n",
+    "\n",
+    "Let's dive a little bit more in some dataframes property.\n",
+    "\n",
+    "Important functions for selecting dataframe's elements are:\n",
+    "  - `index` \n",
+    "  - `loc`\n",
+    "  - `iloc`\n",
+    " \n",
+    "The difference between `loc` and `iloc` is subtle\n",
+    "`loc` allow to select elemets by **name**\n",
+    "`iloc` allow to select elemets by **position**\n",
+    "\n",
+    "It always possible to select columns by name with `[[]]`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "dfCity before the cration of the index\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "5eda61f9f253471aa7e79f4a777df3f6",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "c78b7eb5bbc94722a2e15e77748438ef",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "#Creation of a dataframe without an index\n",
+    "dfCity=pd.DataFrame({'val1':[10,20,30],'val2':[-1,-2,-3],'city':['Roma','Milano','Napoli']})\n",
+    "print('dfCity before the cration of the index')\n",
+    "display(dfCity)\n",
+    "#Selecting one column as index\n",
+    "dfCity.set_index('city')#inplace\n",
+    "display(dfCity)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "9cb9832e33d04186bc013ab46d56468e",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Selection of a column by name\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "dad00caaef6a48cfb2457dc411dc4452",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Selectig using loc\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "a    2\n",
+       "b    5\n",
+       "c    0\n",
+       "Name: 1, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Print of the second colum\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "0    4\n",
+       "1    5\n",
+       "2    6\n",
+       "Name: b, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "#Selecting column by name\n",
+    "display(df)\n",
+    "print('Selection of a column by name')\n",
+    "display(df[['a']])\n",
+    "print('Selectig using loc')\n",
+    "display(df.loc[1])\n",
+    "#Select column by position\n",
+    "print('Print of the second colum')\n",
+    "display(df.iloc[:,1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "source": [
+    "Let's focus a little bit on the difference between `loc` and `iloc`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "f898afd8111a4b29b0a61cfb5c776383",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'selection of cobra'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "max_speed    1\n",
+       "shield       2\n",
+       "Name: cobra, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'Selection of row and column with loc'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "1"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'Selection of row and column with iloc'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "1"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "display(df2)\n",
+    "display('selection of cobra',df2.loc['cobra'])\n",
+    "display('Selection of row and column with loc',df2.loc['cobra','max_speed'])\n",
+    "display('Selection of row and column with iloc',df2.iloc[0,0])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "source": [
+    "**NOTE**: In both cases we can use a list to select multiple rows/columns or `:` to select a range"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Row cobra, all cols'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "max_speed    1\n",
+       "shield       2\n",
+       "Name: cobra, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'Rows cobra and sidewinder, columns max speed'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "cobra         1\n",
+       "sidewinder    7\n",
+       "Name: max_speed, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'Using iloc'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "cobra    1\n",
+       "viper    4\n",
+       "Name: max_speed, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "display('Row cobra, all cols',df2.loc['cobra',:])\n",
+    "display('Rows cobra and sidewinder, columns max speed',df2.loc[['cobra','sidewinder'],'max_speed'])\n",
+    "display('Using iloc',df2.iloc[0:2,0])\n",
+    "#NOTE 0:i i is excluded"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 31,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "2b64f2a8f4ec4e18a508b535a5824e18",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'Selection with loc'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "a    1\n",
+       "b    4\n",
+       "c    0\n",
+       "Name: 0, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'Selection with iloc'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "a    1\n",
+       "b    4\n",
+       "c    0\n",
+       "Name: 0, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "df after the change of the index:\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "68fa06e533fa4c5990e03e3e1ad5d141",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'loc:'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "a    3\n",
+       "b    6\n",
+       "c    0\n",
+       "Name: 0, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'iloc'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "a    1\n",
+       "b    4\n",
+       "c    0\n",
+       "Name: 1, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "display(df)\n",
+    "display('Selection with loc',df.loc[0])\n",
+    "display('Selection with iloc',df.iloc[0])\n",
+    "#Change of index\n",
+    "df.index=[1,2,0]\n",
+    "print('df after the change of the index:')\n",
+    "display(df)\n",
+    "display('loc:',df.loc[0],'iloc',df.iloc[0])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Warning\n",
+    "\n",
+    "If during the selection the dataframes number of columns is **1**, the type of the object changes from `pd.DataFrame` to `pandas.core.series.Series`. \n",
+    "This is valid also if you have 2 colum but one **is the index**."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Original type <class 'pandas.core.frame.DataFrame'>\n",
+      "Only index <class 'pandas.core.frame.DataFrame'>\n",
+      "Only selection <class 'pandas.core.series.Series'>\n",
+      "Index and select <class 'pandas.core.series.Series'>\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "max_speed\n",
+       "1    2\n",
+       "4    5\n",
+       "7    8\n",
+       "Name: shield, dtype: int64"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "print('Original type',type(df2))\n",
+    "print('Only index',type(df2.set_index('max_speed')))\n",
+    "print('Only selection',type(df2.iloc[:,0]))\n",
+    "print('Index and select',type(df2.set_index('max_speed').iloc[:,0]))\n",
+    "display(df2.set_index('max_speed').iloc[:,0])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Drop and other suff\n",
+    "\n",
+    "After the selction of columns and rows let's focus on how to `drop` a column (aka selct out) from a dataframe.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 48,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'df after the drop of c'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "a545e361ef5d4734b2ce0cfb3bad4b2f",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'df after the drop of b'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "8b8c1cdba71846748e72c565c0efa899",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "818aaa8499de4adabb48263048f9f58d",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'df after the index definitio'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "8374a5907d144686ab9e1d0e1b1cc3d5",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/plain": [
+       "'df after the drop of the row with label 2'"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "a888dd2fd4db465e954efda2199ee893",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "#Let's drop c from df\n",
+    "df=pd.DataFrame({'a':[1,2,3],'b':[4,5,6],'c':[0,0,0]})\n",
+    "df.drop(['c'],axis=1)\n",
+    "display('df after the drop of c',df)\n",
+    "df.drop(columns=['b'],inplace=True)\n",
+    "display('df after the drop of b',df)\n",
+    "df.columns=['aaa','ccc']\n",
+    "display(df)\n",
+    "#We can also drop rows\n",
+    "df['nomi']=['pippo','pluto','topolino']\n",
+    "df.set_index(['nomi'],inplace=True)\n",
+    "display('df after the index definitio',df)\n",
+    "display('df after the drop of the row with label pluto',df.drop(['pluto'],axis=0))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 50,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "dropna with orig\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "e1e479dcf7d44a0a9ee58bd9ec400a9f",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "dropna with nothing\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "22c6630eafdc4bc5b5b40b3d58d5528a",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "dropna with axis=0\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "bcbc325504984914b9f6c01af91778aa",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "dropna with axis=1\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "8ba30b6edffe480cb04a186fde52fc92",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "dropna with how=any\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "1b12b6ef43f9493c872f20d973e3611b",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "dropna with how=all\n"
+     ]
+    },
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "6f4ca8613d3a4375a0e97d6a92ef884b",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "dfNan=pd.DataFrame([[1,np.nan,'pippo'],[2,'b','pluto'],[3,'c','topolino'],[np.nan,np.nan,'minnie']])\n",
+    "dict2Print={'orig':dfNan,'nothing':dfNan.dropna(),\n",
+    "            'axis=0':dfNan.dropna(axis=0),\n",
+    "            'axis=1':dfNan.dropna(axis=1),\n",
+    "           'how=any':dfNan.dropna(how='any'),\n",
+    "           'how=all':dfNan.dropna(how='all')}\n",
+    "for curConf,curDF in dict2Print.items():\n",
+    "    print('dropna with %s'%curConf)\n",
+    "    display(curDF)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Join of dataframes\n",
+    "\n",
+    "A very handy function to use on dataframe is `join()`.\n",
+    "\n",
+    "With join it is possible to combine different dataframe using one column as a key.\n",
+    "\n",
+    "This function can be found also in R using `dplyr`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "ename": "ValueError",
+     "evalue": "columns overlap but no suffix specified: Index(['key'], dtype='object')",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mValueError\u001b[0m                                Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-51-3acc4703b8ca>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0mdfLeft\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mpd\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mDataFrame\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m{\u001b[0m\u001b[0;34m'key'\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'a'\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m'b'\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m'd'\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m'f'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m'cost'\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m1\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m2\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m3\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m4\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0mdfRight\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mpd\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mDataFrame\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m{\u001b[0m\u001b[0;34m'key'\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'a'\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m'b'\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m'c'\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m'f'\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m'revenue'\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m10\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m20\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m30\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m40\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m \u001b[0mdisplay\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdfLeft\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mjoin\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdfRight\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;31m#lsuffix='_l',rsuffix='_r'\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      4\u001b[0m \u001b[0mdfRight\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mset_index\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'key'\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0minplace\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0mdisplay\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdfLeft\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mjoin\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mdfRight\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0mon\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m'key'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/anaconda3/lib/python3.6/site-packages/pandas/core/frame.py\u001b[0m in \u001b[0;36mjoin\u001b[0;34m(self, other, on, how, lsuffix, rsuffix, sort)\u001b[0m\n\u001b[1;32m   6324\u001b[0m         \u001b[0;31m# For SparseDataFrame's benefit\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   6325\u001b[0m         return self._join_compat(other, on=on, how=how, lsuffix=lsuffix,\n\u001b[0;32m-> 6326\u001b[0;31m                                  rsuffix=rsuffix, sort=sort)\n\u001b[0m\u001b[1;32m   6327\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   6328\u001b[0m     def _join_compat(self, other, on=None, how='left', lsuffix='', rsuffix='',\n",
+      "\u001b[0;32m/anaconda3/lib/python3.6/site-packages/pandas/core/frame.py\u001b[0m in \u001b[0;36m_join_compat\u001b[0;34m(self, other, on, how, lsuffix, rsuffix, sort)\u001b[0m\n\u001b[1;32m   6339\u001b[0m             return merge(self, other, left_on=on, how=how,\n\u001b[1;32m   6340\u001b[0m                          \u001b[0mleft_index\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mon\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mright_index\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 6341\u001b[0;31m                          suffixes=(lsuffix, rsuffix), sort=sort)\n\u001b[0m\u001b[1;32m   6342\u001b[0m         \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   6343\u001b[0m             \u001b[0;32mif\u001b[0m \u001b[0mon\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/anaconda3/lib/python3.6/site-packages/pandas/core/reshape/merge.py\u001b[0m in \u001b[0;36mmerge\u001b[0;34m(left, right, how, on, left_on, right_on, left_index, right_index, sort, suffixes, copy, indicator, validate)\u001b[0m\n\u001b[1;32m     59\u001b[0m                          \u001b[0mcopy\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mindicator\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mindicator\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     60\u001b[0m                          validate=validate)\n\u001b[0;32m---> 61\u001b[0;31m     \u001b[0;32mreturn\u001b[0m \u001b[0mop\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mget_result\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     62\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     63\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/anaconda3/lib/python3.6/site-packages/pandas/core/reshape/merge.py\u001b[0m in \u001b[0;36mget_result\u001b[0;34m(self)\u001b[0m\n\u001b[1;32m    571\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    572\u001b[0m         llabels, rlabels = items_overlap_with_suffix(ldata.items, lsuf,\n\u001b[0;32m--> 573\u001b[0;31m                                                      rdata.items, rsuf)\n\u001b[0m\u001b[1;32m    574\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    575\u001b[0m         \u001b[0mlindexers\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0;36m1\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mleft_indexer\u001b[0m\u001b[0;34m}\u001b[0m \u001b[0;32mif\u001b[0m \u001b[0mleft_indexer\u001b[0m \u001b[0;32mis\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32mNone\u001b[0m \u001b[0;32melse\u001b[0m \u001b[0;34m{\u001b[0m\u001b[0;34m}\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/anaconda3/lib/python3.6/site-packages/pandas/core/internals.py\u001b[0m in \u001b[0;36mitems_overlap_with_suffix\u001b[0;34m(left, lsuffix, right, rsuffix)\u001b[0m\n\u001b[1;32m   5242\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mlsuffix\u001b[0m \u001b[0;32mand\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0mrsuffix\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   5243\u001b[0m             raise ValueError('columns overlap but no suffix specified: '\n\u001b[0;32m-> 5244\u001b[0;31m                              '{rename}'.format(rename=to_rename))\n\u001b[0m\u001b[1;32m   5245\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   5246\u001b[0m         \u001b[0;32mdef\u001b[0m \u001b[0mlrenamer\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mValueError\u001b[0m: columns overlap but no suffix specified: Index(['key'], dtype='object')"
+     ]
+    }
+   ],
+   "source": [
+    "dfLeft=pd.DataFrame({'key':['a','b','d','f'],'cost':[1,2,3,4]})\n",
+    "dfRight=pd.DataFrame({'key':['a','b','c','f'],'revenue':[10,20,30,40]})\n",
+    "display(dfLeft.join(dfRight))#lsuffix='_l',rsuffix='_r'\n",
+    "dfRight.set_index('key',inplace=True)\n",
+    "display(dfLeft.join(dfRight,on='key'))\n",
+    "#ALternative\n",
+    "dfLeft.set_index('key').join(dfRight)#how\n",
+    "howTypes=['left','right','inner','outer']\n",
+    "d={'how':'','other':dfRight}\n",
+    "for curType in howTypes:\n",
+    "    print('how:{}'.format(curType))\n",
+    "    d['how']=curType\n",
+    "    display(dfLeft.set_index('key').join(**d))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Join in R\n",
+    "\n",
+    "Just to make a conmparison we are going to make the same join in R.\n",
+    "\n",
+    "To do this we'll use the possibility of using a dataframe creted with Pandas in a Python cell inside an R cell.\n",
+    "\n",
+    "This is done by `magic` and the command is `%%R -i nameofthePythonDatframe` "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/vnd.jupyter.widget-view+json": {
+       "model_id": "366a49d5d7ec40baa4a2326caa17e2d3",
+       "version_major": 2,
+       "version_minor": 0
+      }
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "#First we have to remove the index from dfRight\n",
+    "dfRight.reset_index()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "fragment"
+    }
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/anaconda3/lib/python3.6/site-packages/rpy2/rinterface/__init__.py:145: RRuntimeWarning: \n",
+      "Attaching package: ‘dplyr’\n",
+      "\n",
+      "\n",
+      "  warnings.warn(x, RRuntimeWarning)\n",
+      "/anaconda3/lib/python3.6/site-packages/rpy2/rinterface/__init__.py:145: RRuntimeWarning: The following objects are masked from ‘package:stats’:\n",
+      "\n",
+      "    filter, lag\n",
+      "\n",
+      "\n",
+      "  warnings.warn(x, RRuntimeWarning)\n",
+      "/anaconda3/lib/python3.6/site-packages/rpy2/rinterface/__init__.py:145: RRuntimeWarning: The following objects are masked from ‘package:base’:\n",
+      "\n",
+      "    intersect, setdiff, setequal, union\n",
+      "\n",
+      "\n",
+      "  warnings.warn(x, RRuntimeWarning)\n"
+     ]
+    },
+    {
+     "data": {
+      "text/plain": [
+       "  key cost revenue\n",
+       "1   a    1      10\n",
+       "2   b    2      20\n",
+       "3   f    4      40\n"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "%%R -i dfLeft,dfRight\n",
+    "library(dplyr)\n",
+    "dfLeft %>%\n",
+    "    inner_join(dfRight,by='key')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "slideshow": {
+     "slide_type": "slide"
+    }
+   },
+   "source": [
+    "## Exercise\n",
+    "\n",
+    "You have to:\n",
+    "\n",
+    "  - Create an `np.array` with **3** columns and **4** rows and ranform it in an `pd.dataFrame`. Value and column's names must be like the table below  \n",
+    "  - Create a first datafreme with columns **key** and **col1** and the **first** 3 rows\n",
+    "  - Create a first datafreme with columns **key** and **col2** and the **last** 3 rows\n",
+    "  - Join the two dataframes on key in **inner** mode\n",
+    "  - Drop one column of the result dataframe\n",
+    "  \n",
+    "| key | col1 | col2 |\n",
+    "|---|:-:|----|\n",
+    "| a | 1 | 10 |\n",
+    "| b | 2 | 20 |\n",
+    "| c | 3 | 30 |\n",
+    "| b | 4 | 40 |\n",
+    "| c | 5 | 50 |\n",
+    "| d | 6 | 60 |"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "slideshow": {
+     "slide_type": "subslide"
+    }
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Slideshow",
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.5"
+  },
+  "toc": {
+   "base_numbering": 1,
+   "nav_menu": {},
+   "number_sections": false,
+   "sideBar": false,
+   "skip_h1_title": false,
+   "title_cell": "Table of Contents",
+   "title_sidebar": "Contents",
+   "toc_cell": false,
+   "toc_position": {},
+   "toc_section_display": false,
+   "toc_window_display": false
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

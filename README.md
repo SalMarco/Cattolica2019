@@ -64,6 +64,13 @@ For **Mac/Linux** just open the terminal
 
 For **Windows** start `git bash`.  
 
+In order to get familiar with the terminal, you can use [this page](https://dev.to/awwsmm/101-bash-commands-and-tips-for-beginners-to-experts-30je).
+
+The most important sections for us are:
+
+  - Navigating Filesystem
+  - Creating and Deleting Files and Directories
+
 ### Select a destination for the repository
 
 You can see the path of the folder you are in with `pwd` (i.e. print working dir). At the beginning you should be in your home folder.
